@@ -9,9 +9,20 @@ package snowflakeadminreporting;
 
 service SnowflakeAdminReportingService {
   rpc SayHello(Message) returns (Message) {}
+  rpc GetTransactionReport(Financialrequest) returns (Financialresponse) {}
 }
 
 message Message {
     string body = 1;
   }
   
+message Financialresponse {
+    string url = 1;
+    string typename = 2;
+  }
+
+message Financialrequest {
+    string organisationid = 1;
+    string fromdate = 2;
+    string todate =3;
+  }
