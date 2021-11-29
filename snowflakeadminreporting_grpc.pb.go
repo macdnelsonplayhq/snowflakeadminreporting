@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type SnowflakeAdminReportingServiceClient interface {
 	SayHello(ctx context.Context, in *Message, opts ...grpc.CallOption) (*Message, error)
 	GetTransactionReport(ctx context.Context, in *Financialrequest, opts ...grpc.CallOption) (*Financialresponse, error)
+	Externalvoucherrequest(ctx context.Context, in *Financialrequest, opts ...grpc.CallOption) (*Externalvoucherresponse, error)
 }
 
 type snowflakeAdminReportingServiceClient struct {
@@ -48,12 +49,22 @@ func (c *snowflakeAdminReportingServiceClient) GetTransactionReport(ctx context.
 	return out, nil
 }
 
+func (c *snowflakeAdminReportingServiceClient) Externalvoucherrequest(ctx context.Context, in *Financialrequest, opts ...grpc.CallOption) (*Externalvoucherresponse, error) {
+	out := new(Externalvoucherresponse)
+	err := c.cc.Invoke(ctx, "/snowflakeadminreporting.SnowflakeAdminReportingService/Externalvoucherrequest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SnowflakeAdminReportingServiceServer is the server API for SnowflakeAdminReportingService service.
 // All implementations must embed UnimplementedSnowflakeAdminReportingServiceServer
 // for forward compatibility
 type SnowflakeAdminReportingServiceServer interface {
 	SayHello(context.Context, *Message) (*Message, error)
 	GetTransactionReport(context.Context, *Financialrequest) (*Financialresponse, error)
+	Externalvoucherrequest(context.Context, *Financialrequest) (*Externalvoucherresponse, error)
 	mustEmbedUnimplementedSnowflakeAdminReportingServiceServer()
 }
 
@@ -66,6 +77,9 @@ func (UnimplementedSnowflakeAdminReportingServiceServer) SayHello(context.Contex
 }
 func (UnimplementedSnowflakeAdminReportingServiceServer) GetTransactionReport(context.Context, *Financialrequest) (*Financialresponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTransactionReport not implemented")
+}
+func (UnimplementedSnowflakeAdminReportingServiceServer) Externalvoucherrequest(context.Context, *Financialrequest) (*Externalvoucherresponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Externalvoucherrequest not implemented")
 }
 func (UnimplementedSnowflakeAdminReportingServiceServer) mustEmbedUnimplementedSnowflakeAdminReportingServiceServer() {
 }
@@ -117,6 +131,24 @@ func _SnowflakeAdminReportingService_GetTransactionReport_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SnowflakeAdminReportingService_Externalvoucherrequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Financialrequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SnowflakeAdminReportingServiceServer).Externalvoucherrequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/snowflakeadminreporting.SnowflakeAdminReportingService/Externalvoucherrequest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SnowflakeAdminReportingServiceServer).Externalvoucherrequest(ctx, req.(*Financialrequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SnowflakeAdminReportingService_ServiceDesc is the grpc.ServiceDesc for SnowflakeAdminReportingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -131,6 +163,10 @@ var SnowflakeAdminReportingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTransactionReport",
 			Handler:    _SnowflakeAdminReportingService_GetTransactionReport_Handler,
+		},
+		{
+			MethodName: "Externalvoucherrequest",
+			Handler:    _SnowflakeAdminReportingService_Externalvoucherrequest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -10,6 +10,7 @@ package snowflakeadminreporting;
 service SnowflakeAdminReportingService {
   rpc SayHello(Message) returns (Message) {}
   rpc GetTransactionReport(Financialrequest) returns (Financialresponse) {}
+  rpc Externalvoucherrequest(Financialrequest) returns (Externalvoucherresponse) {}
 }
 
 message Message {
@@ -22,6 +23,17 @@ message Financialresponse {
   }
 
 message Financialrequest {
+    string organisationid = 1;
+    string fromdate = 2;
+    string todate =3;
+  }
+
+  message Externalvoucherresponse {
+    string url = 1;
+    string typename = 2;
+  }
+
+message Externalvoucherrequest {
     string organisationid = 1;
     string fromdate = 2;
     string todate =3;
