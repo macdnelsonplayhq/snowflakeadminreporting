@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type SnowflakeAdminReportingServiceClient interface {
 	SayHello(ctx context.Context, in *Message, opts ...grpc.CallOption) (*Message, error)
 	GetTransactionReport(ctx context.Context, in *Financialrequest, opts ...grpc.CallOption) (*Financialresponse, error)
-	GetExternalvoucherrequest(ctx context.Context, in *Financialrequest, opts ...grpc.CallOption) (*Externalvoucherresponse, error)
+	GetExternalvoucherReport(ctx context.Context, in *Externalvoucherrequest, opts ...grpc.CallOption) (*Externalvoucherresponse, error)
 }
 
 type snowflakeAdminReportingServiceClient struct {
@@ -49,9 +49,9 @@ func (c *snowflakeAdminReportingServiceClient) GetTransactionReport(ctx context.
 	return out, nil
 }
 
-func (c *snowflakeAdminReportingServiceClient) GetExternalvoucherrequest(ctx context.Context, in *Financialrequest, opts ...grpc.CallOption) (*Externalvoucherresponse, error) {
+func (c *snowflakeAdminReportingServiceClient) GetExternalvoucherReport(ctx context.Context, in *Externalvoucherrequest, opts ...grpc.CallOption) (*Externalvoucherresponse, error) {
 	out := new(Externalvoucherresponse)
-	err := c.cc.Invoke(ctx, "/snowflakeadminreporting.SnowflakeAdminReportingService/GetExternalvoucherrequest", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/snowflakeadminreporting.SnowflakeAdminReportingService/GetExternalvoucherReport", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *snowflakeAdminReportingServiceClient) GetExternalvoucherrequest(ctx con
 type SnowflakeAdminReportingServiceServer interface {
 	SayHello(context.Context, *Message) (*Message, error)
 	GetTransactionReport(context.Context, *Financialrequest) (*Financialresponse, error)
-	GetExternalvoucherrequest(context.Context, *Financialrequest) (*Externalvoucherresponse, error)
+	GetExternalvoucherReport(context.Context, *Externalvoucherrequest) (*Externalvoucherresponse, error)
 	mustEmbedUnimplementedSnowflakeAdminReportingServiceServer()
 }
 
@@ -78,8 +78,8 @@ func (UnimplementedSnowflakeAdminReportingServiceServer) SayHello(context.Contex
 func (UnimplementedSnowflakeAdminReportingServiceServer) GetTransactionReport(context.Context, *Financialrequest) (*Financialresponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTransactionReport not implemented")
 }
-func (UnimplementedSnowflakeAdminReportingServiceServer) GetExternalvoucherrequest(context.Context, *Financialrequest) (*Externalvoucherresponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExternalvoucherrequest not implemented")
+func (UnimplementedSnowflakeAdminReportingServiceServer) GetExternalvoucherReport(context.Context, *Externalvoucherrequest) (*Externalvoucherresponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExternalvoucherReport not implemented")
 }
 func (UnimplementedSnowflakeAdminReportingServiceServer) mustEmbedUnimplementedSnowflakeAdminReportingServiceServer() {
 }
@@ -131,20 +131,20 @@ func _SnowflakeAdminReportingService_GetTransactionReport_Handler(srv interface{
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SnowflakeAdminReportingService_GetExternalvoucherrequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Financialrequest)
+func _SnowflakeAdminReportingService_GetExternalvoucherReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Externalvoucherrequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SnowflakeAdminReportingServiceServer).GetExternalvoucherrequest(ctx, in)
+		return srv.(SnowflakeAdminReportingServiceServer).GetExternalvoucherReport(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/snowflakeadminreporting.SnowflakeAdminReportingService/GetExternalvoucherrequest",
+		FullMethod: "/snowflakeadminreporting.SnowflakeAdminReportingService/GetExternalvoucherReport",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SnowflakeAdminReportingServiceServer).GetExternalvoucherrequest(ctx, req.(*Financialrequest))
+		return srv.(SnowflakeAdminReportingServiceServer).GetExternalvoucherReport(ctx, req.(*Externalvoucherrequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -165,8 +165,8 @@ var SnowflakeAdminReportingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SnowflakeAdminReportingService_GetTransactionReport_Handler,
 		},
 		{
-			MethodName: "GetExternalvoucherrequest",
-			Handler:    _SnowflakeAdminReportingService_GetExternalvoucherrequest_Handler,
+			MethodName: "GetExternalvoucherReport",
+			Handler:    _SnowflakeAdminReportingService_GetExternalvoucherReport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
